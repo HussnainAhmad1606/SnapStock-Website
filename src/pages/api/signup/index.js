@@ -1,5 +1,5 @@
-import User from "../../models/User"
-import connectDB from "../../middlewares/connectDB";
+import User from "../../../models/User"
+import connectDB from "../../../middlewares/connectDB";
 import bcrypt from "bcryptjs";
 const handler = async (req, res) => {
     if (req.method == "POST") {
@@ -21,7 +21,7 @@ const handler = async (req, res) => {
     }
     
     else {
-        return res.status(200).json({error: "ERROR: Failed to create account" })
+        return res.status(400).json({error: "ERROR: Failed to create account" })
     }
 }
 
