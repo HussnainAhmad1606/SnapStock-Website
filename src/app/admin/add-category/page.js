@@ -64,24 +64,18 @@ const UploadImageToStorage = () => {
 
 
   const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
 
 
   
-async function uploadPhoto(e) {
+async function addCategory(e) {
 
   e.preventDefault();
   const data = {
     title: title,
-    slug: slug,
-    description: description,
-    category: category,
     image: downloadURL
   }
   // Default options are marked with *
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/add-image`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/category/add-category`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
       "Content-Type": "application/json",
@@ -110,17 +104,6 @@ async function uploadPhoto(e) {
 if (e.target.name == "title") {
   setTitle(e.target.value);
 }
-else if (e.target.name == "slug") {
-  setSlug(e.target.value);
-}
-
-else if (e.target.name == "desc") {
-setDescription(e.target.value);
-}
-
-else if (e.target.name == "category") {
-  setCategory(e.target.value);
-}
   }
 
   return (
@@ -138,6 +121,7 @@ pauseOnHover
 theme="dark"
 />
       <form method='POST' className="mx-5 flex flex-col gap-4">
+        <h1>Add New Category</h1>
     <div>
     <div className="mb-2 block">
       <label
@@ -153,69 +137,10 @@ theme="dark"
       name='title'
       onChange={handleOnChange}
       required={true}
-      placeholder='Enter Image Title'
+      placeholder='Category Title'
     />
   </div>
 
-  <div>
-    <div className="mb-2 block">
-      <label
-        htmlFor="slug"
-        value="Product Slug"
-      />
-    </div>
-    <input
-      id="slug"
-      name="slug"
-      className="input input-bordered w-full max-w-xs" 
-      type="text"
-      onChange={handleOnChange}
-      placeholder='Enter Image Slug'
-       
-      required={true}
-    />
-  </div>
-
-
-  <div id="textarea">
-  <div className="mb-2 block">
-    <label
-      htmlFor="description"
-      value="Product Description"
-    />
-  </div>
-  <input
-    id="desc"
-    name="desc"
-    placeholder="Enter Description..."
-    required={true}
-    className="input input-bordered w-full max-w-xs" 
-    onChange={handleOnChange}
-
-    rows={4}
-  />
-</div>
-
-
-
-<div>
-    <div className="mb-2 block">
-      <label
-        htmlFor="category"
-        value="Product Category: "
-      />
-    </div>
-    <input
-      id="category"
-      name="category"
-      type="text"
-      placeholder='Enter Image Category'
-      className="w-full input input-bordered w-full max-w-xs" 
-      required={true}
-      onChange={handleOnChange}
-
-    />
-  </div>
 
 
   <div>
@@ -307,8 +232,8 @@ theme="dark"
       disabled
     />
   </div>
-  <button className='btn btn-primary' onClick={uploadPhoto} type="submit">
-    Upload Photo
+  <button className='btn btn-primary' onClick={addCategory} type="submit">
+    Add Category
   </button>
 </form>
 

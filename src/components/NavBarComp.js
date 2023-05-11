@@ -10,7 +10,7 @@ function NavBarComp() {
       <ul className="menu menu-horizontal px-1">
       <li><Link href={"/"}>Home</Link></li>
         <li tabIndex={0}>
-        <Link href={"/popular"}>
+        <Link href={"/categories"}>
         Categories
            
           </Link>
