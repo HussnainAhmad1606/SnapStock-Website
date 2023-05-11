@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Signup() {
   const [emailMessage, setEmailMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
@@ -34,7 +35,16 @@ function Signup() {
 
     const returnedData = await response.json();
 
-    alert(returnedData.message);
+    toast(`${returnedData.message}`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
    }
    
    else {
@@ -102,6 +112,20 @@ function Signup() {
   }
   return (
     <div className='my-4 flex justify-center items-center h-screen flex-col'>
+      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
+{/* Same as */}
+<ToastContainer />
       <h1>Create An Account</h1>
 
       <div className="form-control w-[50%] h-screen">

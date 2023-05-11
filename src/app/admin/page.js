@@ -13,7 +13,7 @@ function Login() {
       email: email,
       password: password
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/login`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/admin/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ theme="dark"
 />
 {/* Same as */}
 <ToastContainer />
-    <h1>Login</h1>
+    <h1>Admin Login</h1>
 
 
 
