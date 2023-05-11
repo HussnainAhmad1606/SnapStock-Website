@@ -4,10 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import Image from 'next/image';
-
+import { useRouter } from 'next/navigation';
 
 
 function Categories() {
+  const router = useRouter();
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const [images, setImages] = useState([])
@@ -18,6 +20,7 @@ function Categories() {
     .then(res => res.json())
     .then(data => {
         setImages(data.img)
+  
     })
   }, [])
   return (
@@ -27,7 +30,9 @@ function Categories() {
     }
     {
       images.map((cat) => {
-        return <img width={300} src={cat.image}/>
+        return <img width={300} src={cat.image} onClick={()=>{
+router.push(`/images/${cat.slug}`)
+        }}/>
       })
     }
     </div>
