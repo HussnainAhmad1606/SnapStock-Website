@@ -15,6 +15,7 @@ function Categories({params}) {
 
 
   useEffect(() => {
+   
     fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/get-image`, {
   method: 'POST',
   headers: {
@@ -35,7 +36,7 @@ function Categories({params}) {
     {
      Image==""?<Spin indicator={antIcon} />:<div>
       <img src={Image} width={400}/>
-      <a href={Image} className='btn btn-primary' download={"title"}>Download</a>
+      <a href={Image} className='btn btn-primary' download={"title.jpg"}>Download</a>
      </div>
     }
 
