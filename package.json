@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^5.4.7",
     "bcryptjs": "^2.4.3",
     "daisyui": "^2.51.6",
     "firebase": "^9.21.0",

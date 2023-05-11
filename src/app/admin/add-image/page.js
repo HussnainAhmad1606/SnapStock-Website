@@ -1,11 +1,10 @@
 "use client"
-import { Card, Input, List, message, Image, Progress } from 'antd'
+import { Card, List, Image, Progress } from 'antd'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import React, { useState } from 'react'
-import { storage } from '../../../../../firebase/firebaseStorage'
-import "flowbite"
+import { storage } from '../../../../firebase/firebaseStorage'
 import { ToastContainer, toast } from 'react-toastify'
-import { Label, TextInput, Button, Textarea } from "flowbite-react";
+import 'react-toastify/dist/ReactToastify.css';
 const UploadImageToStorage = () => {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState('')
@@ -67,9 +66,7 @@ const UploadImageToStorage = () => {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
-  const [inStock, setInStock] = useState("");
 
 
   
@@ -84,7 +81,7 @@ async function uploadPhoto(e) {
     image: downloadURL
   }
   // Default options are marked with *
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/product/addProduct`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/add-image`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
       "Content-Type": "application/json",
@@ -92,7 +89,9 @@ async function uploadPhoto(e) {
     },
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
-  toast.success('Product Added Successfully', {
+
+  const res = await response.json();
+  toast.success(`${res.message}`, {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -102,8 +101,6 @@ async function uploadPhoto(e) {
     progress: undefined,
     theme: "dark",
     });
-
-  return response.json();
 
    
    
@@ -143,12 +140,12 @@ theme="dark"
       <form method='POST' className="mx-5 flex flex-col gap-4">
     <div>
     <div className="mb-2 block">
-      <Label
+      <label
         htmlFor="title"
         value="Product Title: "
       />
     </div>
-    <TextInput
+    <input
     value={title}
       id="productTitle"
       type="text"
@@ -160,12 +157,12 @@ theme="dark"
 
   <div>
     <div className="mb-2 block">
-      <Label
+      <label
         htmlFor="slug"
         value="Product Slug"
       />
     </div>
-    <TextInput
+    <input
       id="slug"
       name="slug"
       type="text"
@@ -178,12 +175,12 @@ theme="dark"
 
   <div id="textarea">
   <div className="mb-2 block">
-    <Label
+    <label
       htmlFor="description"
       value="Product Description"
     />
   </div>
-  <Textarea
+  <inpput
     id="desc"
     name="desc"
     placeholder="Enter Description..."
@@ -198,12 +195,12 @@ theme="dark"
 
 <div>
     <div className="mb-2 block">
-      <Label
+      <label
         htmlFor="category"
         value="Product Category: "
       />
     </div>
-    <TextInput
+    <input
       id="category"
       name="category"
       type="text"
@@ -216,14 +213,14 @@ theme="dark"
 
   <div>
     <div className="mb-2 block">
-      <Label
+      <label
         htmlFor="productPhoto"
         value="Product Photo: "
       />
     </div>
     <div className="container mt-5">
       <div className="col-lg-8 offset-lg-2">
-        <Input
+        <input
           type="file"
           placeholder="Select file to upload"
           accept="image/png"
@@ -236,7 +233,8 @@ theme="dark"
               <>
                 <List.Item
                   extra={[
-                    <Button
+                    <button
+                    className='btn btn-primary'
                       key="btnRemoveFile"
                       onClick={handleRemoveFile}
                       type="text"
@@ -251,15 +249,16 @@ theme="dark"
                 </List.Item>
 
                 <div className="text-right mt-3">
-                  <Button
+                  <button
+                  className='btn btn-primary'
                     loading={isUploading}
                     type="primary"
                     onClick={handleUploadFile}
                   >
                     Upload
-                  </Button>
+                  </button>
 
-                  <Progress percent={progressUpload} />
+                  <progress className="progress progress-primary w-56" value={progressUpload} max="100"></progress>
                 </div>
               </>
             )}
@@ -282,12 +281,12 @@ theme="dark"
   </div>
   <div>
     <div className="mb-2 block">
-      <Label
+      <label
         htmlFor="photo"
         value="Photo Link"
       />
     </div>
-    <TextInput
+    <input
     value={downloadURL}
       id="photoCover"
       type="text"
@@ -295,9 +294,9 @@ theme="dark"
       disabled
     />
   </div>
-  <Button onClick={uploadPhoto} type="submit">
+  <button className='btn btn-primary' onClick={uploadPhoto} type="submit">
     Upload Photo
-  </Button>
+  </button>
 </form>
 
    
