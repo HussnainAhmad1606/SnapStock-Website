@@ -21,8 +21,8 @@ function NavBarComp() {
       </ul>
     </div>
     <div className="navbar-end">
-    <button class="mx-2 btn btn-primary"><Link href={"/login"}>Login</Link></button>
-    <button class="mx-2 btn btn-primary"><Link href={"/signup"}>Create An Account</Link></button>
+    <button className="mx-2 btn btn-primary"><Link href={"/login"}>Login</Link></button>
+    <button className="mx-2 btn btn-primary"><Link href={"/signup"}>Create An Account</Link></button>
     </div>
   </div>
   )

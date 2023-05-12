@@ -1,12 +1,75 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import jwt from "jsonwebtoken"
 function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [fullName, setFullName] = useState("")
+
+  const tokenVerification = async()=> {
+    let localToken = localStorage.getItem("jwt_token");
+    if (localToken!== null) {
+      console.log(localToken);
+    const data = {
+      token: localToken==null?"":localToken
+    }
+  
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/verifyToken`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+
+    const returnedData = await response.json();
+
+    if (returnedData.message == "success") {
+      toast(`You are logged in`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    } 
+    else {
+      toast(`You need to login to your account`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
+    }
+    else {
+      toast(`You need to login to your account else`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
+  }
+  useEffect(() => {
+    tokenVerification();
+ }, [])
+  
 
   const login = async() => {
     const data = {
@@ -23,7 +86,7 @@ function Login() {
     });
 
     const returnedData = await response.json();
-
+    localStorage.setItem("jwt_token", returnedData.token);
     toast(`${returnedData.message}`, {
       position: "bottom-right",
       autoClose: 5000,
@@ -67,6 +130,7 @@ theme="dark"
 />
 {/* Same as */}
 <ToastContainer />
+
     <h1>Login</h1>
 
 
