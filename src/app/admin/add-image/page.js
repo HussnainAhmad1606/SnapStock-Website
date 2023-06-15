@@ -2,7 +2,10 @@
 import { Card, List, Image, Progress } from 'antd'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import React, { useState } from 'react'
-import { storage } from '../../../../firebase/firebaseStorage'
+import { storage } from '../../../../firebase/firebaseStorage';
+const axios = require('axios')
+const tf = require('@tensorflow/tfjs-node')
+const nsfw = require('nsfwjs')
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 const UploadImageToStorage = () => {

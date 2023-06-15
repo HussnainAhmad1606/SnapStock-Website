@@ -6,12 +6,13 @@ import { Spin } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import macy from 'macy';
+import Macy from 'macy';
 function Categories() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const [fullName, setFullName] = useState("")
+const [fullName, setFullName] = useState("");
+const [isLoaded, setIsLoaded] = useState(false);
   const gridElement = useRef();
 
 
@@ -75,29 +76,33 @@ const [fullName, setFullName] = useState("")
    const data = await res.json();
     setImages(data.img);
 
- if(gridElement.current) {
-  const macyInstance =  macy({
-    container: "#grid",
-    breakAt: {
-      1600: 4,
-      1200: 4,
-      900: 3,
-      600: 2,
-      400: 1,
-    },
-    margin: {
-      x: 20,
-      y: 20,
-    },
-  })
- }
+    setIsLoaded(true);
 
   }
 
   useEffect(() => {
-    
+
     tokenVerification();
    getData();
+
+    const macyInstance =  Macy({
+      waitForImages: true,
+      container: "#grid",
+      breakAt: {
+        1600: 4,
+        1200: 4,
+        900: 3,
+        600: 2,
+      },
+      margin: {
+        x: 20,
+        y: 20,
+      },
+    })
+    setTimeout(() => {
+      macyInstance.recalculate();
+    }, 500);
+   
 
 
   
@@ -105,32 +110,35 @@ const [fullName, setFullName] = useState("")
   }, [])
   return (
     <>
+    
     <center>
       <h1>
         Images
       </h1>
     </center>
+    
     {
-      isLoggedIn?`Welcome: ${fullName}`:"You need to login to see this content"
-    }
-    {
-      isLoggedIn && <div ref={gridElement} style={{
-        margin: "0px 0px",
-        marginTop: "50px"
-  
-      }} id='grid' className=''>
-      {
-        images.length == 0?<Spin indicator={antIcon} />: ""
-      }
-      {
-        images.map((cat, index) => {
-          return <img key={index} width={400} src={cat.image} onClick={()=>{
-  router.push(`/images/${cat.slug}`)
-          }}/>
-        })
-      }
+          images.length == 0?<Spin indicator={antIcon} />: ""
+        }
+    
+        <div ref={gridElement} style={{
+          margin: "0px 0px",
+          marginTop: "50px",
+          
+    
+        }} id='grid' className=''>
+    
+    
+        {
+          images.map((cat, index) => {
+            return <img key={index} width={400} src={cat.image} onClick={()=>{
+    router.push(`/images/${cat.slug}`)
+            }}/>
+          })
+        }
       </div>
-    }
+      
+    
       </>
   )
 }

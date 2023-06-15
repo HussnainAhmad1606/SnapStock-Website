@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html  data-theme="night" lang="en">
+    <html  data-theme="light" lang="en">
       <body>
       <NavBar/>
         {children}

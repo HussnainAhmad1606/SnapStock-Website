@@ -53,18 +53,7 @@ function Login() {
         });
     }
     }
-    else {
-      toast(`You need to login to your account else`, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-    }
+    
   }
   useEffect(() => {
     tokenVerification();
@@ -87,6 +76,7 @@ function Login() {
 
     const returnedData = await response.json();
     localStorage.setItem("jwt_token", returnedData.token);
+    localStorage.setItem("username", returnedData.name);
     toast(`${returnedData.message}`, {
       position: "bottom-right",
       autoClose: 5000,
