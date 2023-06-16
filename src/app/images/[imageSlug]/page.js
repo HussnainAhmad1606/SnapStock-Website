@@ -1,12 +1,11 @@
 "use client"
 import {} from "firebase/storage";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { LoadingOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { Spin } from 'antd';
-import {storage} from '../../../../firebase/firebaseStorage';
-var FileSaver = require('file-saver');
-import Image from 'next/image';
+
+import Macy from 'macy';
 
 
 var download = require("downloadjs")
@@ -23,15 +22,38 @@ function Categories({params}) {
   const [authorName, setAuthorName] = useState("");
   const [authorBio, setAuthorBio] = useState("");
   const [authorAvatar, setAuthorAvatar] = useState("");
-  const [originalImageTitle, setOriginalImageTitle] = useState("");
   const [imageDownloadURL, setImageDownloadURL] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [relatedImgs, setRelatedImgs] = useState([]);
 
+  
+  const gridElement = useRef();
 
   const downloadImage = async() => {
-    console.log(originalImageTitle);
     console.log(Image)
     download(Image);
   }
+
+  useEffect(() => {
+    const macyInstance =  Macy({
+      waitForImages: true,
+      container: "#grid",
+      breakAt: {
+        1600: 4,
+        1200: 4,
+        900: 3,
+        600: 2,
+      },
+      margin: {
+        x: 20,
+        y: 20,
+      },
+    })
+  
+    macyInstance.recalculate();
+  
+  }, [loading])
+  
 
 
   useEffect(() => {
@@ -54,17 +76,22 @@ function Categories({params}) {
         setAuthorName(data.img[0].authorName)
         setAuthorBio(data.img[0].authorBio)
         setAuthorAvatar(data.img[0].authorAvatar)
-        setOriginalImageTitle(data.img[0].originalImageTitle)
-        console.log(Image)
+        console.log(Image);
+        setRelatedImgs(data.relatedImgs);
+        console.log(relatedImgs)
+        setLoading(true);
     })
   }, [])
   return (
-    <div className='flex justify-center items-center w-full h-screen'>
+    <>
+    <div className='flex flex-col justify-center items-center w-full h-screen'>
 
 
 
 
-<div className="card lg:card-side bg-base-100 shadow-2xl">
+{
+  loading?(
+    <div className="card lg:card-side bg-base-100 shadow-2xl">
   <figure><img src={Image} alt="Album"/></figure>
   <div className="card-body">
     <h1 className="text-4xl card-title">{title}</h1>
@@ -86,7 +113,32 @@ function Categories({params}) {
     </div>
   </div>
 </div>
+  ): (<>Loading...<Spin indicator={antIcon} /></>)
+}
+
+
     </div>
+
+    <h1 className="text-3xl text-center font-bold my-5">Related Images</h1> 
+
+
+<div ref={gridElement} style={{
+          margin: "0px 0px",
+          marginTop: "50px",
+          
+          
+        }} id='grid' className=''>
+{
+  relatedImgs.map((cat, index) => {
+    if (cat.slug != imageSlug) {
+      return <img key={index} width={400} src={cat.image} onClick={()=>{
+        router.push(`/images/${cat.slug}`)
+                }}/>
+    }
+          })
+        }
+</div>
+              </>
   )
 }
 
