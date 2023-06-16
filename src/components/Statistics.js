@@ -2,11 +2,11 @@ import React from 'react'
 
 function Statistics() {
   return (
-    <div className='flex justify-evenly items-center h-screen flex-col'>
+    <div className='flex justify-evenly items-center h-[60vh] flex-col'>
         <center>
         <h1>Statistics</h1>
         </center>
-    <div className="flex justify-center items-center h-screen w-[70%] stats shadow">
+    <div className="flex justify-center items-center h-screen w-[70%] stats">
   
   <div className="stat">
     <div className="stat-figure text-primary">

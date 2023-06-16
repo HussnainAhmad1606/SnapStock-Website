@@ -16,7 +16,7 @@ export default function Home() {
     <div>
      
      <div className='flex justify-center items-center w-full h-screen'>
-      <div>
+      <div className='mx-10'>
       <h1>Discover the perfect image for every project</h1>
       <button onClick={()=> {
         router.push("/images");

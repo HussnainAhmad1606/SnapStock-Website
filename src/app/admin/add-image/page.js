@@ -4,10 +4,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import React, { useState } from 'react'
 import { storage } from '../../../../firebase/firebaseStorage';
 const axios = require('axios')
-const tf = require('@tensorflow/tfjs-node')
-const nsfw = require('nsfwjs')
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import jwt from "jsonwebtoken";
 const UploadImageToStorage = () => {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState('')
@@ -75,13 +74,18 @@ const UploadImageToStorage = () => {
   
 async function uploadPhoto(e) {
 
-  e.preventDefault();
+  const token = localStorage.getItem("jwt_token");
+  const token_data = jwt.decode(token, process.env.NEXT_JWT_TOKEN);
+
   const data = {
     title: title,
     slug: slug,
     description: description,
     category: category,
-    image: downloadURL
+    image: downloadURL,
+    authorName: token_data.fullName,
+    authorBio: token_data.bio,
+    authorAvatar: token_data.avatar
   }
   // Default options are marked with *
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/add-image`, {
@@ -129,28 +133,31 @@ else if (e.target.name == "category") {
   return (
     <>
     <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="dark"
-/>
-      <form method='POST' className="mx-5 flex flex-col gap-4">
-    <div>
-    <div className="mb-2 block">
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="dark"
+    />
+    <div style={{
+      marginLeft: "-100px"
+    }} className='flex justify-between flex-col items-center w-full h-[150vh]'>
+
+    <div className=''>
+    <div className=" mb-2 block">
       <label
         htmlFor="title"
         value="Product Title: "
-      />
+        />
     </div>
     <input
     value={title}
-    className="input input-bordered w-full max-w-xs" 
+    className="w-[200%] input input-bordered" 
       id="productTitle"
       type="text"
       name='title'
@@ -170,13 +177,13 @@ theme="dark"
     <input
       id="slug"
       name="slug"
-      className="input input-bordered w-full max-w-xs" 
+      className="w-[200%] input input-bordered" 
       type="text"
       onChange={handleOnChange}
       placeholder='Enter Image Slug'
        
       required={true}
-    />
+      />
   </div>
 
 
@@ -192,11 +199,11 @@ theme="dark"
     name="desc"
     placeholder="Enter Description..."
     required={true}
-    className="input input-bordered w-full max-w-xs" 
+    className="w-[200%] input input-bordered" 
     onChange={handleOnChange}
-
+    
     rows={4}
-  />
+    />
 </div>
 
 
@@ -206,18 +213,18 @@ theme="dark"
       <label
         htmlFor="category"
         value="Product Category: "
-      />
+        />
     </div>
     <input
       id="category"
       name="category"
       type="text"
       placeholder='Enter Image Category'
-      className="w-full input input-bordered w-full max-w-xs" 
+      className="w-[200%] input input-bordered"
       required={true}
       onChange={handleOnChange}
-
-    />
+      
+      />
   </div>
 
 
@@ -226,22 +233,22 @@ theme="dark"
       <label
         htmlFor="productPhoto"
         value="Product Photo: "
-      />
+        />
     </div>
     <div className="container mt-5">
-      <div className="col-lg-8 offset-lg-2">
+      <div className="col-lg-8">
         <input
           type="file"
-          className='file-input w-full max-w-xs'
+          className='file-input input-bordered w-[150%]'
           placeholder="Select file to upload"
           accept="image/png"
           onChange={(files) => handleSelectedFile(files.target.files)}
         />
 
-        <div className="mt-5">
+        <div className="mt-5 w-[200%]">
           <Card>
             {
-               imageFile?"":"Your Image will be shown here after you upload it" 
+              imageFile?"":"Your Image will be shown here after you upload it" 
             }
             {imageFile && (
               <>
@@ -253,25 +260,25 @@ theme="dark"
                       onClick={handleRemoveFile}
                       type="text"
                       value={"Remove Image"}
-                      icon={<i className="fas fa-times"></i>}
-                    />,
+                    >Remove Image</button>,
                   ]}
                 >
                   <List.Item.Meta
                     title={imageFile.name}
-                    description={`Size: ${imageFile.size}`}
+                    description={`Size: ${(imageFile.size / 1024).toFixed(2)} KB`}
                   />
                 </List.Item>
 
                 <div className="text-right mt-3">
                   <button
                   className='btn btn-primary'
-                    loading={isUploading}
+                  loading={isUploading}
                     type="primary"
                     onClick={handleUploadFile}
-                  >
+                    >
                     Upload
                   </button>
+                  <br/>
 
                   <progress className="progress progress-primary w-56" value={progressUpload} max="100"></progress>
                 </div>
@@ -306,17 +313,18 @@ theme="dark"
       id="photoCover"
       type="text"
       required={true}
-      className="w-full input input-bordered w-full max-w-xs" 
+      className="w-[200%] input input-bordered" 
       disabled
-    />
+      />
   </div>
   <button className='btn btn-primary' onClick={uploadPhoto} type="submit">
     Upload Photo
   </button>
-</form>
+
 
    
-                  </>
+                  </div>
+      </>
   )
 }
 

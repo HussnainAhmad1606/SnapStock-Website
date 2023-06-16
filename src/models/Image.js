@@ -7,6 +7,9 @@ const imageSchema = new Schema({
   description: { type: String },
   category: { type: String },
   image: { type: String },
+  authorName: { type: String },
+  authorBio: { type: String },
+  authorAvatar: { type: String }
 }, { timestamps: true });
 
 

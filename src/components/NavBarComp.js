@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import Link from "next/link";
+import jwt from "jsonwebtoken";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,10 +35,17 @@ function NavBarComp() {
 
     let usernameStorage = localStorage.getItem("username");
 
+    let token = localStorage.getItem("jwt_token");
+
     if (usernameStorage != null) {
       setUsername(username);
       isLoggedIn(true);
       setAvatar("https://wakatime.com/photo/bcededad-96a6-4a0c-882f-84ea0a604508?s=420&cache=false&time=1686858120.3998978")
+    }
+
+    if (token != null) {
+      const data = jwt.decode(token, process.env.NEXT_JWT_TOKEN);
+      setUsername(data.fullName);
     }
   }, [])
 
@@ -92,6 +100,7 @@ theme="dark"
             </div>
           </label>
           <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+            <span className='mx-4 my-2'> Hi, {username}</span>
             <li>
               <Link href={"/profile"} className="justify-between">
                 Profile

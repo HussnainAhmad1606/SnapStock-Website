@@ -7,7 +7,10 @@ const handler = async (req, res) => {
             description: req.body.description,
             slug: req.body.slug,
             category: req.body.category,
-            image: req.body.image
+            image: req.body.image,
+            authorName: req.body.authorName,
+            authorBio: req.body.authorBio,
+            authorAvatar: req.body.authorAvatar
         })
 
         await image.save();

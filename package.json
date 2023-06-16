@@ -13,6 +13,8 @@
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "daisyui": "^2.51.6",
+    "downloadjs": "^1.4.7",
+    "file-saver": "^2.0.5",
     "firebase": "^9.21.0",
     "jsonwebtoken": "^9.0.0",
     "leaflet": "^1.9.4",

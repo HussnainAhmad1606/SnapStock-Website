@@ -37,20 +37,11 @@ const [isLoaded, setIsLoaded] = useState(false);
     if (returnedData.message == "success") {
       setFullName(returnedData.data.fullName);
       setIsLoggedIn(true);
-      toast(`You are logged in`, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+      
     } 
     }
     else {
-      toast(`You need to login to your account`, {
+      toast(`You need to login to your account in order to see content`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -99,16 +90,15 @@ const [isLoaded, setIsLoaded] = useState(false);
         y: 20,
       },
     })
-    setTimeout(() => {
-      macyInstance.recalculate();
-      console.log("Recalculated")
-    }, 1000);
+  if (isLoaded) {
+    macyInstance.recalculate();
+  }
    
 
 
   
 
-  }, [])
+  }, [isLoaded])
   return (
     <>
     
@@ -119,7 +109,7 @@ const [isLoaded, setIsLoaded] = useState(false);
     </center>
     
     {
-          images.length == 0?<Spin indicator={antIcon} />: ""
+          images.length == 0?<div className='flex justify-center items-center w-full h-screen'><Spin indicator={antIcon} /></div>: ""
         }
     
         <div ref={gridElement} style={{
