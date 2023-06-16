@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import AdminCard from '@/components/AdminCard';
+import Link from 'next/link';
 function page() {
 
   const [fullName, setFullName] = useState("");
@@ -31,7 +32,7 @@ function page() {
 {
   isLoading?<div className='flex justify-center items-center w-full h-screen'><Spin indicator={antIcon} /></div>:(
     <div
-    className='flex justify-center items-center w-full h-[110vh] flex-col'
+    className='flex justify-center items-center w-full h-[125vh] flex-col'
     style={{
       minWidth: "100vh"
     }}>
@@ -52,9 +53,9 @@ function page() {
 <h1 className='my-20 text-center text-[40px] font-bold'>Actions</h1>
 
 
-<div className='flex justify-center items-center flex-row'>
-<button class="btn btn-primary">Add New Image</button>
-<button class="mx-2 btn btn-primary">Add New Category</button>
+<div className='my-10 flex justify-center items-center flex-row'>
+<Link href={"/admin/add-image"} className="btn btn-primary">Add New Image</Link>
+<Link href={"/admin/add-category"} className="mx-2 btn btn-primary">Add New Category</Link>
 </div>
 </div>
   )

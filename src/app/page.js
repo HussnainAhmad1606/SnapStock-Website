@@ -17,7 +17,7 @@ export default function Home() {
      
      <div className='flex justify-center items-center w-full h-screen'>
       <div className='mx-10'>
-      <h1>Discover the perfect image for every project</h1>
+      <h1 className='text-5xl font-bold'>Discover the perfect image for every project</h1>
       <button onClick={()=> {
         router.push("/images");
       }} className='my-4 btn btn-primary'>Explore SnapStock</button>

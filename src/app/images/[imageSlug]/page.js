@@ -92,7 +92,18 @@ function Categories({params}) {
 {
   loading?(
     <div className="card lg:card-side bg-base-100 shadow-2xl">
-  <figure><img src={Image} alt="Album"/></figure>
+  <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }}
+  ><img style={{
+    maxWidth: "100%",
+    maxHeight: "100%",
+    objectFit: "contain"   
+  }} src={Image} alt="Photo"/></div>
+ 
   <div className="card-body">
     <h1 className="text-4xl card-title">{title}</h1>
     <p>{description}</p>

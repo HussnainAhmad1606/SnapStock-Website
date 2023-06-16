@@ -6,13 +6,15 @@ import { storage } from '../../../../firebase/firebaseStorage';
 const axios = require('axios')
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import {checkImageForAdultContent} from '../../../components/ImageDetection';
 import jwt from "jsonwebtoken";
 const UploadImageToStorage = () => {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [progressUpload, setProgressUpload] = useState(0);
-
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [isAdultContent, setIsAdultContent] = useState(false);
   const handleSelectedFile = (files, e) => {
 
     if (files && files[0].size < 10000000) {
@@ -22,6 +24,22 @@ const UploadImageToStorage = () => {
     } else {
       message.error('File size to large')
     }
+  }
+
+
+  const checkForAdultContent = async(url) => {
+    setAdultCheckingMessage("Checking for adult content...");
+    setButtonDisabled(true);
+    const result = await checkImageForAdultContent(url);
+    setIsAdultContent(result);
+    if (result) {
+      setAdultCheckingMessage("This image contains adult content.")
+
+    }
+    else {
+      setAdultCheckingMessage("Image is safe to upload")
+    }
+    setButtonDisabled(false);
   }
 
   const handleUploadFile = () => {
@@ -53,7 +71,8 @@ const UploadImageToStorage = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             //url is download url of file
-            setDownloadURL(url)
+            setDownloadURL(url);
+            checkForAdultContent(url);
           })
         },
       )
@@ -69,6 +88,7 @@ const UploadImageToStorage = () => {
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [adultCheckingMessage, setAdultCheckingMessage] = useState("");
 
 
   
@@ -85,7 +105,8 @@ async function uploadPhoto(e) {
     image: downloadURL,
     authorName: token_data.fullName,
     authorBio: token_data.bio,
-    authorAvatar: token_data.avatar
+    authorAvatar: token_data.avatar,
+    isAdultOrExplicit: isAdultContent
   }
   // Default options are marked with *
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/add-image`, {
@@ -296,6 +317,15 @@ else if (e.target.name == "category") {
               
               </>
             )}
+            {
+              downloadURL && (
+                <>
+                <br/>
+                <br/>
+                <span className='text-center'>{adultCheckingMessage}</span>
+                </>
+              )
+            }
             <p></p>
           </Card>
         </div>
@@ -318,7 +348,7 @@ else if (e.target.name == "category") {
       disabled
       />
   </div>
-  <button className='btn btn-primary' onClick={uploadPhoto} type="submit">
+  <button className='btn btn-primary' disabled={buttonDisabled} onClick={uploadPhoto} type="submit">
     Upload Photo
   </button>
 

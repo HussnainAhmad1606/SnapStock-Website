@@ -10,7 +10,8 @@ const handler = async (req, res) => {
             image: req.body.image,
             authorName: req.body.authorName,
             authorBio: req.body.authorBio,
-            authorAvatar: req.body.authorAvatar
+            authorAvatar: req.body.authorAvatar,
+            isAdultOrExplicit: req.body.isAdultOrExplicit
         })
 
         await image.save();

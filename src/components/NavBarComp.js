@@ -104,7 +104,7 @@ theme="dark"
             <li>
               <Link href={"/admin"} className="justify-between">
                 Admin Panel
-                <div class="badge badge-primary">New</div>
+                <div className="badge badge-primary">New</div>
               </Link>
             </li>
             <li>

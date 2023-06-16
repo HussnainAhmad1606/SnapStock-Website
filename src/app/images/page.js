@@ -129,20 +129,22 @@ const [isLoaded, setIsLoaded] = useState(false);
                 position: "relative"
                 
               }} className="img">
-                <p style={{
+                <p  onClick={()=>{
+                  router.push(`/images/${cat.slug}`)
+                          }} style={{
     background: "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))",
-
+    backgroundColor: `${cat.isAdultOrExplicit?"black":"transparent"}`,
                   color: "white",
                   position: "absolute",
                   top: 0,
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  display: "none"
-                }} className='message'>{cat.title}</p>
-                <img key={index} width={400} src={cat.image} onClick={()=>{
-                  router.push(`/images/${cat.slug}`)
-                          }}/>
+                  display: `${cat.isAdultOrExplicit==true?"flex":"none"}`,
+                  justifyContent:  `${cat.isAdultOrExplicit==true?"center":""}`,
+                  alignItems:  `${cat.isAdultOrExplicit==true?"center":""}`,
+                }} className='message'>{cat.isAdultOrExplicit==true?"This photo contain explicit or adultry content":cat.title}</p>
+                <img key={index} width={400} src={cat.image}/>
 
               </div>
             )

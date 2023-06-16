@@ -37,7 +37,7 @@ const [isLoading, setIsLoading] = useState(false);
     <div className=''>
       <h1 className="text-3xl font-bold">Hi, {name}</h1>
       <p className="py-6">{bio}</p>
-      <Link href={"/images"} className="btn btn-primary">My Images</Link>
+      <Link href={"/profile/my-images"} className="btn btn-primary">My Images</Link>
       <Link href={"/images"} className="mx-3 btn btn-error">Delete Account</Link>
     </div>
   </div>
