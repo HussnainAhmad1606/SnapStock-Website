@@ -1,6 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import Link from "next/link"
+import Link from "next/link";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function NavBarComp() {
 
   const [username, setUsername] = useState("");
@@ -8,6 +12,16 @@ function NavBarComp() {
   const [avatar, setAvatar] = useState("");
 
   const logout = () => {
+    toast(`You are logged out`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
     
     localStorage.removeItem("username");
     localStorage.removeItem("jwt_token");
@@ -29,6 +43,19 @@ function NavBarComp() {
 
 
   return (
+    <>
+      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <Link href={"/"} className="btn btn-ghost normal-case text-xl">SnapStock</Link>
@@ -77,6 +104,7 @@ function NavBarComp() {
         }
       </div>
     </div>
+        </>
   )
 }
 

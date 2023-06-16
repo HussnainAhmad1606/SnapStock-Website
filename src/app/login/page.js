@@ -105,6 +105,7 @@ function Login() {
 
 
   return (
+    <>
     <div className='my-4 flex justify-between items-center h-[80vh] flex-col'>
       <ToastContainer
 position="top-right"
@@ -148,6 +149,7 @@ theme="dark"
 
 
   </div>
+</>
   )
   }
 

@@ -101,7 +101,8 @@ const [isLoaded, setIsLoaded] = useState(false);
     })
     setTimeout(() => {
       macyInstance.recalculate();
-    }, 500);
+      console.log("Recalculated")
+    }, 1000);
    
 
 
