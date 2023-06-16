@@ -102,6 +102,12 @@ theme="dark"
           <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <span className='mx-4 my-2'> Hi, {username}</span>
             <li>
+              <Link href={"/admin"} className="justify-between">
+                Admin Panel
+                <div class="badge badge-primary">New</div>
+              </Link>
+            </li>
+            <li>
               <Link href={"/profile"} className="justify-between">
                 Profile
               </Link>

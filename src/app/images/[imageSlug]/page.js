@@ -84,7 +84,7 @@ function Categories({params}) {
   }, [])
   return (
     <>
-    <div className='flex flex-col justify-center items-center w-full h-screen'>
+    <div className='flex flex-col justify-center items-center w-full h-[140vh]'>
 
 
 
@@ -119,7 +119,7 @@ function Categories({params}) {
 
     </div>
 
-    <h1 className="text-3xl text-center font-bold my-5">Related Images</h1> 
+    <h1 className="text-3xl text-center font-bold my-50">Related Images</h1> 
 
 
 <div ref={gridElement} style={{
@@ -137,7 +137,13 @@ function Categories({params}) {
     }
           })
         }
+
+
 </div>
+
+{
+          loading&&relatedImgs.length<2?<div className="my-20 text-center font-bold text-2xl">No Images Found</div>:""
+        }
               </>
   )
 }

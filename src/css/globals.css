@@ -12,6 +12,20 @@ h1 {
 img {
     cursor: pointer;
 }
-img:hover {
+/* img:hover {
     filter: brightness(0.5);
+     */
+/* } */
+
+img:hover .message {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+div.img:hover p.message {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer;
 }

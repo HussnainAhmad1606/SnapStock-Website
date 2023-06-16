@@ -144,6 +144,7 @@ else if (e.target.name == "category") {
     pauseOnHover
     theme="dark"
     />
+    <h1 className='text-3xl text-center font-bold'>Add a Image</h1>
     <div style={{
       marginLeft: "-100px"
     }} className='flex justify-between flex-col items-center w-full h-[150vh]'>

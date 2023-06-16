@@ -14,16 +14,16 @@ const handler = async (req, res) => {
         if (user && (await bcrypt.compare(rPassword, user.password))) {
             // var token = jwt.sign({email: user.email, password: user.password}, process.env.JWT_TOKEN);
             // res.json({ token })
-            return res.status(200).json({message: "Admin logged in Successfully"})
+            return res.status(200).json({type: "success",message: "Admin logged in Successfully, Redirecting you to dashboard.."})
             
         }
         else {
-            return res.status(400).json({message: "Wrong Credientials. Please try again."})
+            return res.status(400).json({type: "error", message: "Wrong Credientials. Please try again."})
 
         }
        }
         else {
-            return res.status(400).json({message: "Admin not found"})
+            return res.status(400).json({type: "error", message: "Admin not found"})
         }
 
         // return res.status(200).json({rPassword})

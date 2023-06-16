@@ -1,4 +1,5 @@
 "use client"
+import "../../css/images.css";
 import Category from '../../components/Category'
 import React, { useEffect, useRef, useState } from 'react'
 import { LoadingOutlined } from '@ant-design/icons';
@@ -115,6 +116,7 @@ const [isLoaded, setIsLoaded] = useState(false);
         <div ref={gridElement} style={{
           margin: "0px 0px",
           marginTop: "50px",
+          minHeight: "100vh",
           
     
         }} id='grid' className=''>
@@ -122,9 +124,28 @@ const [isLoaded, setIsLoaded] = useState(false);
     
         {
           images.map((cat, index) => {
-            return <img key={index} width={400} src={cat.image} onClick={()=>{
-    router.push(`/images/${cat.slug}`)
-            }}/>
+            return (
+              <div style={{
+                position: "relative"
+                
+              }} className="img">
+                <p style={{
+    background: "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))",
+
+                  color: "white",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: "none"
+                }} className='message'>{cat.title}</p>
+                <img key={index} width={400} src={cat.image} onClick={()=>{
+                  router.push(`/images/${cat.slug}`)
+                          }}/>
+
+              </div>
+            )
           })
         }
       </div>

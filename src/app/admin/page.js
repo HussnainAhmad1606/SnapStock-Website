@@ -1,9 +1,12 @@
 "use client"
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
+
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +29,7 @@ function Login() {
 
     toast(`${returnedData.message}`, {
       position: "bottom-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -34,8 +37,18 @@ function Login() {
       progress: undefined,
       theme: "dark",
       });
+
+      if (returnedData.type == "success") {
+        setTimeout(() => {
+         router.push("/admin/dashboard")
+        }, 3000);
+        
+     }
    }
+
   
+  
+   
 
 
 
