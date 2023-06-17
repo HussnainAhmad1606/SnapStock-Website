@@ -9,7 +9,8 @@ const imageSchema = new Schema({
   image: { type: String },
   authorName: { type: String },
   authorBio: { type: String },
-  authorAvatar: { type: String }
+  authorAvatar: { type: String },
+  isAdultOrExplicit: { type: String }
 }, { timestamps: true });
 
 

@@ -33,7 +33,7 @@ const UploadImageToStorage = () => {
     const result = await checkImageForAdultContent(url);
     setIsAdultContent(result);
     if (result) {
-      setAdultCheckingMessage("This image contains adult content.")
+      setAdultCheckingMessage("This image contains adult/explicit content but you can add it to the website and user will see label of Explicit/Adult.")
 
     }
     else {
@@ -108,6 +108,7 @@ async function uploadPhoto(e) {
     authorAvatar: token_data.avatar,
     isAdultOrExplicit: isAdultContent
   }
+  console.log(data);
   // Default options are marked with *
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/add-image`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.

@@ -7,9 +7,9 @@ function ImageCard({title, image, slug}) {
 fetch(`${process.env.NEXT_PUBLIC_URL}/api/images/delete-image`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({slug: slug}),
+    body: JSON.stringify({slug: slug})
 }).then(res => res.json())
 .then(data => {
   alert(data.message);
